@@ -17,6 +17,8 @@ public class ConcreteMemento implements Memento {
 		this.tipoDeEspaco = tipoDeEspaco;
 		this.area = area;
 		this.grauDeFidelidade = grauDeFidelidade;
+		
+		
 	}
 	
 	public int getName() {
@@ -46,6 +48,4 @@ public class ConcreteMemento implements Memento {
 	public String getGrauDeFielidade() {
 		return this.grauDeFidelidade;
 	}
-	
-
 }

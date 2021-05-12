@@ -3,23 +3,29 @@ package padraoMemento;
 import modelo.ConfiguracaoAmbiente;
 
 public class Caretaker {
-	private Memento[] osMementos = new Memento[100];
-	int tamanho = 0;
-	int capacidade = 100;
-	ConfiguracaoAmbiente configuracaoAmbiente;
-	Memento memento;
+	private Memento memento;
+	private ConcreteMemento concreteMemento;
+	private Pilha aPilha = new Pilha();
 	
-	public void backup() {
-		if (tamanho < capacidade) {
-			this.osMementos[tamanho] = configuracaoAmbiente.saveState();
-			tamanho++;
-			System.out.println("Estado atual salvo com sucesso!");
-		}
+	public void backup(ConfiguracaoAmbiente ambiente) {
+		memento = ambiente.saveState();
+		Nodo novoNodo = new Nodo(memento);
+		this.aPilha.empilha(novoNodo);
+		
+		System.out.println("Estado atual salvo com sucesso!");
 	}
 	
-	public void restore() {
-		memento = this.osMementos[tamanho];
+	public void restore(ConfiguracaoAmbiente ambiente) {
+		memento = this.aPilha.desempilha();
+		concreteMemento = (ConcreteMemento) memento;
 		
-		this.configuracaoAmbiente.restore(memento);
+		ambiente.restore(concreteMemento);
+	}
+	
+	public void exibirConfiguracaoAtual() {
+		memento = null;
+		memento = this.aPilha.verTopo();
+		concreteMemento = (ConcreteMemento) memento;
+		System.out.println(concreteMemento.getEstacao() + concreteMemento.getHora() + concreteMemento.getTipoDeEspaco() + concreteMemento.getArea() + concreteMemento.getGrauDeFielidade());
 	}
 }
